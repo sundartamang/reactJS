@@ -1,23 +1,30 @@
-import logo from './logo.svg';
 import './App.css';
+import { useMemo, useState } from 'react';
 
-function App() {
+
+const calculate = () => {
+  let result = 0;
+  for (let i = 0; i < 10000; i++) {
+    console.log("i ", i)
+    result += 10;
+  }
+  return result;
+}
+
+const App = () => {
+  const [count, setCount] = useState(0);
+
+  const [dependentCount, setDependentCount] = useState(0);
+  useMemo(calculate, [dependentCount]);
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <button onClick={() => setCount(count + 1)}>Increment 1</button>
+      <h5>Count : {count}</h5>
+
+      <br />
+      <button onClick={() => setDependentCount(dependentCount + 1)}>Increment 2</button>
+      <h5>Depndent Count : {dependentCount}</h5>
     </div>
   );
 }
